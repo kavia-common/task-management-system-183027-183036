@@ -1,82 +1,44 @@
-# Lightweight React Template for KAVIA
+# To-Do Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+This is a lightweight React UI for managing tasks. It integrates with a backend Tasks REST API exposed by the SQLite db_visualizer service.
 
-## Features
+How the frontend reaches the backend API
+- The app uses: BASE_URL = process.env.REACT_APP_API_URL || '/api' (see src/api.js)
+- We set a CRA proxy in package.json: "proxy": "http://localhost:4000"
+- In development, requests to '/api/*' are forwarded to the backend on http://localhost:4000
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+Run steps
 
-## Getting Started
+1) Ensure the backend is running on port 4000
+- From task-management-system-183027-183037/to_do_db:
+  python3 init_db.py
+- From task-management-system-183027-183037/to_do_db/db_visualizer:
+  npm install
+  source sqlite.env
+  PORT=4000 npm start
 
-In the project directory, you can run:
+2) Start the frontend
+- From this directory (task-management-system-183027-183036/to_do_frontend):
+  npm install
+  npm start
+- Open http://localhost:3000
 
-### `npm start`
+Alternative: specify API URL explicitly
+- If your backend is on a different host/port or you do not use the CRA proxy, start with:
+  REACT_APP_API_URL=http://<backend-host>:<port>/api npm start
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Available scripts
 
-### `npm test`
+- npm start
+  Runs the app in development mode at http://localhost:3000
 
-Launches the test runner in interactive watch mode.
+- npm test
+  Launches the test runner in interactive watch mode
 
-### `npm run build`
+- npm run build
+  Builds the app for production to the build folder
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-## Customization
-
-### Colors
-
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
-
-### Components
-
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Notes / Troubleshooting
+- If tasks fail to load, confirm the backend is running on 4000 or set REACT_APP_API_URL accordingly.
+- The backend expects SQLITE_DB to be set. Use `source task-management-system-183027-183037/to_do_db/db_visualizer/sqlite.env` before starting the backend.
+- CORS is enabled on the backend; using the CRA proxy is recommended for local dev.
